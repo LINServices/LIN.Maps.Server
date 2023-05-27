@@ -29,6 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+LIN.Maps.Server.Mapbox.Token = builder.Configuration["mapbox:token"] ?? string.Empty;
+
 app.UseCors("AllowAnyOrigin");
 app.UseHttpsRedirection();
 

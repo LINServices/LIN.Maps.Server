@@ -18,4 +18,8 @@
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Types\LIN.Types.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

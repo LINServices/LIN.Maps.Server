@@ -1,4 +1,6 @@
+global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
+global using LIN.Modules;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +22,33 @@ builder.Services.AddCors(options =>
         });
 });
 
+
+string sqlConnection = builder.Configuration["ConnectionStrings:somee"] ?? string.Empty;
+
+// Servicio de BD
+builder.Services.AddDbContext<LIN.Maps.Server.Data.Context>(options =>
+{
+    options.UseSqlServer(sqlConnection);
+});
+
+
+
+
+
+
 var app = builder.Build();
+
+
+try
+{
+    // Si la base de datos no existe
+    using var scope = app.Services.CreateScope();
+    var dataContext = scope.ServiceProvider.GetRequiredService<LIN.Maps.Server.Data.Context>();
+    var res = dataContext.Database.EnsureCreated();
+}
+catch
+{ }
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

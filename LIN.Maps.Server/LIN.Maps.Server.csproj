@@ -7,19 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\AccesoAPI\LIN.Access.Developer\LIN.Access.Developer.csproj" />
     <ProjectReference Include="..\..\..\..\Tipos\Http\Http.csproj" />
+    <ProjectReference Include="..\..\..\..\Tipos\LIN.Modules\LIN.Modules.csproj" />
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Types.Developer\LIN.Types.Developer.csproj" />
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Types.Maps\LIN.Types.Maps.csproj" />
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Types\LIN.Types.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,9 @@
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
 global using LIN.Modules;
+global using LIN.Types.Responses;
+global using LIN.Maps.Server;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

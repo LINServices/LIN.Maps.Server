@@ -16,14 +16,27 @@ public class ProfileController : ControllerBase
     public async Task<HttpCreateResponse> Create([FromQuery] double longitude, [FromQuery] double latitude, [FromQuery] string token)
     {
 
-        // Cambios de formato
-        string longitudeStr = longitude.ToString().Replace(',', '.');
-        string latitudeStr = latitude.ToString().Replace(',', '.');
+        // Login 
+        var login = await LIN.Access.Auth.Controllers.Authentication.Login(token);
+
+        // SI no se acepto
+        if (login.Response != Responses.Success)
+        {
+            return new(Responses.Unauthorized);
+        }
 
 
+        var profile = Data.Conte
 
+        var modelo = new LIN.Types.Maps.Models.PlacePoint()
+        {
+            ID = 0,
+            Latitude = latitude,
+            Longitude = longitude,
+            Time = DateTime.Now,
+            Profile = new()
 
-
+        }
 
 
 

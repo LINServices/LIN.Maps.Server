@@ -1,4 +1,4 @@
-﻿namespace LIN.Identity.Data;
+﻿namespace LIN.Maps.Server.Data;
 
 
 public class Points

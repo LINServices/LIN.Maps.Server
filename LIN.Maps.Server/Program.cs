@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
 });
 
 
-string sqlConnection = builder.Configuration["ConnectionStrings:somee"] ?? string.Empty;
+string sqlConnection = builder.Configuration["ConnectionStrings:con"] ?? string.Empty;
 
 // Servicio de BD
 builder.Services.AddDbContext<LIN.Maps.Server.Data.Context>(options =>

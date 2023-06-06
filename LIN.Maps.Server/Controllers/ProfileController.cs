@@ -1,8 +1,4 @@
 ﻿using Http.ResponsesList;
-using LIN.Maps.Server.ApiModel;
-using LIN.Types.Developer.Models;
-using LIN.Types.Maps.Models;
-using Newtonsoft.Json;
 
 namespace LIN.Maps.Server.Controllers;
 
@@ -26,7 +22,37 @@ public class ProfileController : ControllerBase
         }
 
 
-        var profile = Data.Conte
+        var profile = await Data.Profiles.ReadByAccount(login.Model.ID);
+
+
+        if (profile.Response == Responses.Success)
+        {
+        }
+        else if (profile.Response == Responses.NotExistProfile)
+        {
+            var profileModel = new LIN.Types.Maps.Models.ProfileModel()
+            {
+                AccountID = login.Model.ID,
+                ID = 0,
+                PlacesPoint = new()
+            };
+
+            var profCreate = await Data.Profiles.Create(profileModel);
+
+            if (profCreate.Response != Responses.Success)
+            {
+                return new(Responses.Unauthorized);
+            }
+
+            profile.Model = new()
+            {
+                ID = profCreate.LastID
+            };
+        }
+        else
+        {
+            return new(Responses.Unauthorized);
+        }
 
         var modelo = new LIN.Types.Maps.Models.PlacePoint()
         {
@@ -34,85 +60,16 @@ public class ProfileController : ControllerBase
             Latitude = latitude,
             Longitude = longitude,
             Time = DateTime.Now,
-            Profile = new()
-
-        }
-
-
-
-
-
-
-
-
-        // Generación del uso
-        var uso = new ApiKeyUsesDataModel()
-        {
-            Valor = 1m
+            Profile = new() { ID = profile.Model.ID }
         };
 
-        // Respuesta
-        var responseCobro = await LIN.Access.Developer.Controllers.ApiKey.GenerateUse(uso, key);
 
-
-        if (responseCobro.Response != Responses.Success)
-        {
-            return new ReadAllResponse<PlaceDataModel>()
-            {
-                Response = Responses.Unauthorized,
-                Message = responseCobro.Message
-            };
-        }
-
-        // Url del servicio 
-        string url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{param}.json?access_token=pk.eyJ1IjoiYWxleDIyMDkiLCJhIjoiY2xmeGVqZ2FwMHFsajNjczZlMnY0ZDFucSJ9.NGqSheAZ0xhWtEsudyEhQA&limit={limit}";
-
-
-        // Ejecución
-        try
-        {
-
-            // Envía la solicitud
-            var response = await new HttpClient().GetAsync(url);
-
-            // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonConvert.DeserializeObject<MapboxGeocodingResponse>(responseContent) ?? new();
+        _ = Data.Points.Create(modelo);
 
 
 
-            var places = new List<PlaceDataModel>();
 
-
-            foreach (var feature in obj.Features)
-            {
-                try
-                {
-                    var place = new PlaceDataModel()
-                    {
-                        Text = feature.Text,
-                        Nombre = feature.PlaceName,
-                        Longitud = feature.Center[0].ToString().Replace(',', '.'),
-                        Latitud = feature.Center[1].ToString().Replace(',', '.')
-                    };
-                    places.Add(place);
-                }
-                catch
-                {
-
-                }
-
-            }
-
-            return new ReadAllResponse<PlaceDataModel>(Responses.Success, places ?? new());
-
-        }
-        catch
-        {
-        }
-
-        return new(Responses.UnavailableService);
+        return new(Responses.Success);
 
 
     }

@@ -30,7 +30,7 @@ public class Points
     /// Obtiene la lista de puntos
     /// </summary>
     /// <param name="id">ID del profile</param>
-    public async static Task<ReadAllResponse<LIN.Types.Maps.Models.PlacePoint>> Read(int id)
+    public async static Task<ReadAllResponse<LIN.Types.Maps.Models.PlacePoint>> ReadAll(int id)
     {
 
         // Obtiene la conexión

@@ -8,7 +8,7 @@ public class ProfileController : ControllerBase
 {
 
 
-    [HttpGet("point")]
+    [HttpPost("point")]
     public async Task<HttpCreateResponse> Create([FromQuery] double longitude, [FromQuery] double latitude, [FromQuery] string token)
     {
 
@@ -74,6 +74,46 @@ public class ProfileController : ControllerBase
 
     }
 
+
+
+
+    [HttpGet("point")]
+    public async Task<HttpReadAllResponse<LIN.Types.Maps.Models.PlacePoint>> Get([FromQuery] string token)
+    {
+
+        // Login 
+        var login = await LIN.Access.Auth.Controllers.Authentication.Login(token);
+
+        // SI no se acepto
+        if (login.Response != Responses.Success)
+        {
+            return new(Responses.Unauthorized);
+        }
+
+
+        var profile = await Data.Profiles.ReadByAccount(login.Model.ID);
+
+
+        if (profile.Response != Responses.Success)
+        {
+            return new(Responses.Unauthorized);
+        }
+
+
+
+       var result = await Data.Points.ReadAll(profile.Model.ID);
+
+
+
+
+        return new ReadAllResponse<LIN.Types.Maps.Models.PlacePoint>(Responses.Success)
+        {
+            Models = result.Models,
+            Response = Responses.Success
+        };
+
+
+    }
 
 
 }

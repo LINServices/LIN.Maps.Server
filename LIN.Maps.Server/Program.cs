@@ -65,6 +65,7 @@ app.UseCors("AllowAnyOrigin");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+Conexión.SetStringConnection(sqlConnection);
 
 app.MapControllers();
 

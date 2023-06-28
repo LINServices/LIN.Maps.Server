@@ -60,11 +60,12 @@ public class ProfileController : ControllerBase
             Latitude = latitude,
             Longitude = longitude,
             Time = DateTime.Now,
-            Profile = new() { ID = profile.Model.ID }
+            Profile = new() { ID = profile.Model.ID, PlacesPoint = new() },
+
         };
 
 
-        _ = Data.Points.Create(modelo);
+        var result = await Data.Points.Create(modelo);
 
 
 

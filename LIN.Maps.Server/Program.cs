@@ -1,8 +1,8 @@
-global using Microsoft.EntityFrameworkCore;
-global using Microsoft.AspNetCore.Mvc;
+global using LIN.Maps.Server;
 global using LIN.Modules;
 global using LIN.Types.Responses;
-global using LIN.Maps.Server;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,10 +55,11 @@ catch
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+
 }
 
+app.UseSwagger();
+app.UseSwaggerUI();
 LIN.Maps.Server.Mapbox.Token = builder.Configuration["mapbox:token"] ?? string.Empty;
 
 app.UseCors("AllowAnyOrigin");

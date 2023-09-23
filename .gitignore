@@ -3,8 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-LIN.Maps/appsettings.json
-LIN.Maps/appsettings.Development.json
+LIN.Maps.Server/appsettings.json
+LIN.Maps.Server/appsettings.Development.json
 
 
 

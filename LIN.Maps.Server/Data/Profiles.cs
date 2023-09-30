@@ -8,16 +8,15 @@ public class Profiles
     #region Abstracciones
 
 
-
     /// <summary>
     /// Crear nuevo perfil
     /// </summary>
     /// <param name="data">Modelo</param>
-    public async static Task<CreateResponse> Create(LIN.Types.Maps.Models.ProfileModel data)
+    public static async Task<CreateResponse> Create(LIN.Types.Maps.Models.ProfileModel data)
     {
 
         // Obtiene la conexión
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         var res = await Create(data, context);
         context.CloseActions(connectionKey);
@@ -31,11 +30,11 @@ public class Profiles
     /// </summary>
     /// <param name="id">ID del profile</param>
     /// <returns></returns>
-    public async static Task<ReadOneResponse<LIN.Types.Maps.Models.ProfileModel>> Read(int id)
+    public static async Task<ReadOneResponse<LIN.Types.Maps.Models.ProfileModel>> Read(int id)
     {
 
         // Obtiene la conexión
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         var res = await Read(id, context);
         context.CloseActions(connectionKey);
@@ -49,20 +48,17 @@ public class Profiles
     /// Obtiene un perfil por medio del usuario LIN
     /// </summary>
     /// <param name="id">ID de LIN</param>
-    public async static Task<ReadOneResponse<LIN.Types.Maps.Models.ProfileModel>> ReadByAccount(int id)
+    public static async Task<ReadOneResponse<LIN.Types.Maps.Models.ProfileModel>> ReadByAccount(int id)
     {
 
         // Obtiene la conexión
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         var res = await ReadByAccount(id, context);
         context.CloseActions(connectionKey);
         return res;
 
     }
-
-
-
 
 
     #endregion
@@ -74,7 +70,7 @@ public class Profiles
     /// </summary>
     /// <param name="data">Modelo del enlace</param>
     /// <param name="context">Contexto de conexión</param>
-    public async static Task<CreateResponse> Create(LIN.Types.Maps.Models.ProfileModel data, Conexión context)
+    public static async Task<CreateResponse> Create(LIN.Types.Maps.Models.ProfileModel data, Conexión context)
     {
         // ID en 0
         data.ID = 0;
@@ -100,7 +96,7 @@ public class Profiles
     /// </summary>
     /// <param name="id">ID del perfil</param>
     /// <param name="context">Contexto de conexión</param>
-    public async static Task<ReadOneResponse<LIN.Types.Maps.Models.ProfileModel>> Read(int id, Conexión context)
+    public static async Task<ReadOneResponse<LIN.Types.Maps.Models.ProfileModel>> Read(int id, Conexión context)
     {
 
         // Ejecución
@@ -133,7 +129,7 @@ public class Profiles
     /// </summary>
     /// <param name="id">ID del Usuario LIN</param>
     /// <param name="context">Contexto de conexión</param>
-    public async static Task<ReadOneResponse<LIN.Types.Maps.Models.ProfileModel>> ReadByAccount(int id, Conexión context)
+    public static async Task<ReadOneResponse<LIN.Types.Maps.Models.ProfileModel>> ReadByAccount(int id, Conexión context)
     {
 
         // Ejecución

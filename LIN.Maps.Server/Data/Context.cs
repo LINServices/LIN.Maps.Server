@@ -36,7 +36,7 @@ public class Context : DbContext
            .HasKey(e => e.ID);
 
         // Unico
-         modelBuilder.Entity<LIN.Types.Maps.Models.ProfileModel>()
+        modelBuilder.Entity<LIN.Types.Maps.Models.ProfileModel>()
            .HasIndex(e => e.AccountID)
            .IsUnique();
 

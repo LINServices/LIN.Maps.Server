@@ -27,7 +27,7 @@ public class SearchController : ControllerBase
         };
 
         // Respuesta
-        var responseCobro = await LIN.Access.Developer.Controllers.ApiKey.GenerateUse(uso, key);
+        var responseCobro = await Access.Developer.Controllers.ApiKey.GenerateUse(uso, key);
 
 
         if (responseCobro.Response != Responses.Success)
@@ -40,7 +40,7 @@ public class SearchController : ControllerBase
         }
 
         // Url del servicio 
-        string url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{param}.json?access_token=pk.eyJ1IjoiYWxleDIyMDkiLCJhIjoiY2xmeGVqZ2FwMHFsajNjczZlMnY0ZDFucSJ9.NGqSheAZ0xhWtEsudyEhQA&limit={limit}";
+        var url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{param}.json?access_token=pk.eyJ1IjoiYWxleDIyMDkiLCJhIjoiY2xmeGVqZ2FwMHFsajNjczZlMnY0ZDFucSJ9.NGqSheAZ0xhWtEsudyEhQA&limit={limit}";
 
 
         // Ejecución
@@ -51,7 +51,7 @@ public class SearchController : ControllerBase
             var response = await new HttpClient().GetAsync(url);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<MapboxGeocodingResponse>(responseContent) ?? new();
 
@@ -105,7 +105,7 @@ public class SearchController : ControllerBase
         };
 
         // Respuesta
-        var responseCobro = await LIN.Access.Developer.Controllers.ApiKey.GenerateUse(uso, key);
+        var responseCobro = await Access.Developer.Controllers.ApiKey.GenerateUse(uso, key);
 
 
         if (responseCobro.Response != Responses.Success)
@@ -124,7 +124,8 @@ public class SearchController : ControllerBase
         var coor = BoundingBox.CreateBoundingBox(double.Parse(longitud), double.Parse(latitud), 10);
 
         // Url del servicio 
-        string url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{param}.json?access_token=pk.eyJ1IjoiYWxleDIyMDkiLCJhIjoiY2xmeGVqZ2FwMHFsajNjczZlMnY0ZDFucSJ9.NGqSheAZ0xhWtEsudyEhQA&bbox={coor.MinX.ToString().Replace(',', '.')},{coor.MinY.ToString().Replace(',', '.')},{coor.MaxX.ToString().Replace(',', '.')},{coor.MaxY.ToString().Replace(',', '.')}&limit={limit}";
+        var url =
+            $"https://api.mapbox.com/geocoding/v5/mapbox.places/{param}.json?access_token=pk.eyJ1IjoiYWxleDIyMDkiLCJhIjoiY2xmeGVqZ2FwMHFsajNjczZlMnY0ZDFucSJ9.NGqSheAZ0xhWtEsudyEhQA&bbox={coor.MinX.ToString().Replace(',', '.')},{coor.MinY.ToString().Replace(',', '.')},{coor.MaxX.ToString().Replace(',', '.')},{coor.MaxY.ToString().Replace(',', '.')}&limit={limit}";
 
 
         // Ejecucion
@@ -135,7 +136,7 @@ public class SearchController : ControllerBase
             var response = await new HttpClient().GetAsync(url);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<MapboxGeocodingResponse>(responseContent) ?? new();
 

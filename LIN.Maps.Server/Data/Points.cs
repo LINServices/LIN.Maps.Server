@@ -8,16 +8,15 @@ public class Points
     #region Abstracciones
 
 
-
     /// <summary>
     /// Crear nuevo punto
     /// </summary>
     /// <param name="data">Modelo</param>
-    public async static Task<CreateResponse> Create(LIN.Types.Maps.Models.PlacePoint data)
+    public static async Task<CreateResponse> Create(LIN.Types.Maps.Models.PlacePoint data)
     {
 
         // Obtiene la conexión
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         var res = await Create(data, context);
         context.CloseActions(connectionKey);
@@ -30,11 +29,11 @@ public class Points
     /// Obtiene la lista de puntos
     /// </summary>
     /// <param name="id">ID del profile</param>
-    public async static Task<ReadAllResponse<LIN.Types.Maps.Models.PlacePoint>> ReadAll(int id)
+    public static async Task<ReadAllResponse<LIN.Types.Maps.Models.PlacePoint>> ReadAll(int id)
     {
 
         // Obtiene la conexión
-        (Conexión context, string connectionKey) = Conexión.GetOneConnection();
+        (var context, var connectionKey) = Conexión.GetOneConnection();
 
         var res = await ReadAll(id, context);
         context.CloseActions(connectionKey);
@@ -52,7 +51,7 @@ public class Points
     /// </summary>
     /// <param name="data">Modelo del enlace</param>
     /// <param name="context">Contexto de conexión</param>
-    public async static Task<CreateResponse> Create(LIN.Types.Maps.Models.PlacePoint data, Conexión context)
+    public static async Task<CreateResponse> Create(LIN.Types.Maps.Models.PlacePoint data, Conexión context)
     {
         // ID en 0
         data.ID = 0;
@@ -79,7 +78,7 @@ public class Points
     /// </summary>
     /// <param name="id">ID del perfil</param>
     /// <param name="context">Contexto de conexión</param>
-    public async static Task<ReadAllResponse<LIN.Types.Maps.Models.PlacePoint>> ReadAll(int id, Conexión context)
+    public static async Task<ReadAllResponse<LIN.Types.Maps.Models.PlacePoint>> ReadAll(int id, Conexión context)
     {
 
         // Ejecución
@@ -89,7 +88,7 @@ public class Points
             var now = DateTime.Now;
 
             var activo = await (from P in context.DataBase.Points
-                                where P.Profile.ID== id
+                                where P.Profile.ID == id
                                 select P).ToListAsync();
 
             if (activo == null)

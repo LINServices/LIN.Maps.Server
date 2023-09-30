@@ -31,7 +31,7 @@ public sealed class Conexión
     /// <summary>
     /// Palabra secreta para la encriptación
     /// </summary>
-    internal static readonly string SecreteWord = "ipass:";
+    readonly internal static string SecreteWord = "ipass:";
 
 
 
@@ -104,7 +104,7 @@ public sealed class Conexión
         DbContextOptionsBuilder<Data.Context> optionsBuilder = new();
         optionsBuilder.UseSqlServer(_connection);
 
-        DataBase = new Data.Context(optionsBuilder.Options);
+        DataBase = new(optionsBuilder.Options);
 
         _counter++;
         ConnectionNumber = _counter;
@@ -175,12 +175,12 @@ public sealed class Conexión
 #endif
 
         await Task.Run(() =>
-          {
-              for (var i = 0; i < _cantidad; i++)
-              {
-                  _ = new Conexión();
-              }
-          });
+        {
+            for (var i = 0; i < _cantidad; i++)
+            {
+                _ = new Conexión();
+            }
+        });
 
     }
 
@@ -211,7 +211,7 @@ public sealed class Conexión
             lock (con)
             {
                 con.SetOnUse();
-                string key = KeyGen.Generate(10, "con.");
+                var key = KeyGen.Generate(10, "con.");
                 con.mykey = key;
                 return (con, key);
             }

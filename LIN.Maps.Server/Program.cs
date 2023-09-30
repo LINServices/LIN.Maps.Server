@@ -19,13 +19,13 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder.AllowAnyOrigin()
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
+               .AllowAnyHeader()
+               .AllowAnyMethod();
         });
 });
 
 
-string sqlConnection = builder.Configuration["ConnectionStrings:con"] ?? string.Empty;
+var sqlConnection = builder.Configuration["ConnectionStrings:con"] ?? string.Empty;
 
 // Servicio de BD
 builder.Services.AddDbContext<LIN.Maps.Server.Data.Context>(options =>
@@ -49,7 +49,8 @@ try
     var res = dataContext.Database.EnsureCreated();
 }
 catch
-{ }
+{
+}
 
 
 // Configure the HTTP request pipeline.
@@ -60,13 +61,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseSwagger();
 app.UseSwaggerUI();
-LIN.Maps.Server.Mapbox.Token = builder.Configuration["mapbox:token"] ?? string.Empty;
+Mapbox.Token = builder.Configuration["mapbox:token"] ?? string.Empty;
 
 app.UseCors("AllowAnyOrigin");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-Conexión.SetStringConnection(sqlConnection);
+ConexiÃ³n.SetStringConnection(sqlConnection);
 
 app.MapControllers();
 

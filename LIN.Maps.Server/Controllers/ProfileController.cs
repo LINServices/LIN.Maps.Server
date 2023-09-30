@@ -13,7 +13,7 @@ public class ProfileController : ControllerBase
     {
 
         // Login 
-        var login = await LIN.Access.Auth.Controllers.Authentication.Login(token);
+        var login = await Access.Auth.Controllers.Authentication.Login(token);
 
         // SI no se acepto
         if (login.Response != Responses.Success)
@@ -60,8 +60,11 @@ public class ProfileController : ControllerBase
             Latitude = latitude,
             Longitude = longitude,
             Time = DateTime.Now,
-            Profile = new() { ID = profile.Model.ID, PlacesPoint = new() },
-
+            Profile = new()
+            {
+                ID = profile.Model.ID,
+                PlacesPoint = new()
+            }
         };
 
 
@@ -83,7 +86,7 @@ public class ProfileController : ControllerBase
     {
 
         // Login 
-        var login = await LIN.Access.Auth.Controllers.Authentication.Login(token);
+        var login = await Access.Auth.Controllers.Authentication.Login(token);
 
         // SI no se acepto
         if (login.Response != Responses.Success)
@@ -102,7 +105,7 @@ public class ProfileController : ControllerBase
 
 
 
-       var result = await Data.Points.ReadAll(profile.Model.ID);
+        var result = await Data.Points.ReadAll(profile.Model.ID);
 
 
 

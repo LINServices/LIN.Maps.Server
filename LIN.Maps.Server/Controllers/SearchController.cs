@@ -20,25 +20,6 @@ public class SearchController : ControllerBase
     {
 
 
-        // Generación del uso
-        var uso = new ApiKeyUsesDataModel()
-        {
-            Valor = 1m
-        };
-
-        // Respuesta
-        var responseCobro = await Access.Developer.Controllers.ApiKey.GenerateUse(uso, key);
-
-
-        if (responseCobro.Response != Responses.Success)
-        {
-            return new ReadAllResponse<PlaceDataModel>()
-            {
-                Response = Responses.Unauthorized,
-                Message = responseCobro.Message
-            };
-        }
-
         // Url del servicio 
         var url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{param}.json?access_token=pk.eyJ1IjoiYWxleDIyMDkiLCJhIjoiY2xmeGVqZ2FwMHFsajNjczZlMnY0ZDFucSJ9.NGqSheAZ0xhWtEsudyEhQA&limit={limit}";
 
@@ -99,25 +80,7 @@ public class SearchController : ControllerBase
     {
 
         // Generación del uso
-        var uso = new ApiKeyUsesDataModel()
-        {
-            Valor = 1m
-        };
-
-        // Respuesta
-        var responseCobro = await Access.Developer.Controllers.ApiKey.GenerateUse(uso, key);
-
-
-        if (responseCobro.Response != Responses.Success)
-        {
-            return new ReadAllResponse<PlaceDataModel>()
-            {
-                Response = Responses.Unauthorized,
-                Message = responseCobro.Message
-            };
-        }
-
-
+      
 
         longitud = longitud.Replace(".", ",");
         latitud = latitud.Replace(".", ",");

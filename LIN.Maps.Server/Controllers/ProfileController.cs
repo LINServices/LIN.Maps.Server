@@ -22,7 +22,7 @@ public class ProfileController : ControllerBase
         }
 
 
-        var profile = await Data.Profiles.ReadByAccount(login.Model.ID);
+        var profile = await Data.Profiles.ReadByAccount(login.Model.Id);
 
 
         if (profile.Response == Responses.Success)
@@ -32,7 +32,7 @@ public class ProfileController : ControllerBase
         {
             var profileModel = new LIN.Types.Maps.Models.ProfileModel()
             {
-                AccountID = login.Model.ID,
+                AccountID = login.Model.Id,
                 ID = 0,
                 PlacesPoint = new()
             };
@@ -95,7 +95,7 @@ public class ProfileController : ControllerBase
         }
 
 
-        var profile = await Data.Profiles.ReadByAccount(login.Model.ID);
+        var profile = await Data.Profiles.ReadByAccount(login.Model.Id);
 
 
         if (profile.Response != Responses.Success)

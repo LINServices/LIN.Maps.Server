@@ -1,8 +1,7 @@
 ﻿using Http.ResponsesList;
-using LIN.Types.Responses;
-using Newtonsoft.Json;
-using LIN.Types.Maps.Models;
 using LIN.Maps.Server.ApiModel;
+using LIN.Types.Maps.Models;
+using Newtonsoft.Json;
 
 namespace LIN.Maps.Server.Controllers;
 
@@ -12,11 +11,27 @@ public class SearchController : ControllerBase
 {
 
 
-
-
     [HttpGet("search")]
     public async Task<HttpReadAllResponse<PlaceDataModel>> Create([FromQuery] string param, [FromQuery] int limit, [FromQuery] string key)
     {
+
+        // Generar cobro.
+        // -------------Realizar acción ---------------
+
+        // Validar cobro.
+        // -------------Realizar acción ---------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // Url del servicio 
@@ -34,7 +49,7 @@ public class SearchController : ControllerBase
             var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<MapboxGeocodingResponse>(responseContent) ?? new();
-
+            
 
 
             var places = new List<PlaceDataModel>();
@@ -79,7 +94,7 @@ public class SearchController : ControllerBase
     {
 
         // Generación del uso
-      
+
 
         longitud = longitud.Replace(".", ",");
         latitud = latitud.Replace(".", ",");

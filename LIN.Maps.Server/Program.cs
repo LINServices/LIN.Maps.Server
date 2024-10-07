@@ -1,8 +1,8 @@
 global using LIN.Maps.Server;
-global using LIN.Modules;
 global using LIN.Types.Responses;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
+using LIN.Access.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthenticationService();
 
 builder.Services.AddCors(options =>
 {
@@ -25,7 +26,7 @@ builder.Services.AddCors(options =>
 });
 
 
-var sqlConnection = builder.Configuration["ConnectionStrings:con"] ?? string.Empty;
+var sqlConnection = builder.Configuration["ConnectionStrings:cloud"] ?? string.Empty;
 
 // Servicio de BD
 builder.Services.AddDbContext<LIN.Maps.Server.Data.Context>(options =>

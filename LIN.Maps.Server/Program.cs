@@ -2,28 +2,21 @@ global using LIN.Maps.Server;
 global using LIN.Types.Responses;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
+using Http.Extensions;
 using LIN.Access.Auth;
+using LIN.Maps.Server.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddAuthenticationService();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-        });
-});
+builder.Services.AddAuthenticationService();
+builder.Services.AddLINHttp();
+
+// Mapbox.
+builder.Services.AddMapBox(builder.Configuration["mapbox:token"] ?? string.Empty);
 
 
 var sqlConnection = builder.Configuration["ConnectionStrings:cloud"] ?? string.Empty;
@@ -53,21 +46,11 @@ catch
 {
 }
 
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-
-}
-
-app.UseSwagger();
-app.UseSwaggerUI();
-Mapbox.Token = builder.Configuration["mapbox:token"] ?? string.Empty;
-
-app.UseCors("AllowAnyOrigin");
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthorization();
+app.UseLINHttp();
 Conexión.SetStringConnection(sqlConnection);
 
 app.MapControllers();

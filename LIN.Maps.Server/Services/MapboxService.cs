@@ -1,5 +1,6 @@
 ﻿using LIN.Maps.Server.ApiModel;
 using LIN.Types.Maps.Models;
+using System.Globalization;
 
 namespace LIN.Maps.Server.Services;
 
@@ -75,7 +76,7 @@ public class MapboxService
         var client = new Global.Http.Services.Client(string.Format(MapboxGeocodingUrl, param));
 
         // Obtener coordenadas.
-        var coordinates = BoundingBox.CreateBoundingBox(double.Parse(longitude), double.Parse(latitude), 10);
+        var coordinates = BoundingBox.CreateBoundingBox(double.Parse(longitude, CultureInfo.InvariantCulture), double.Parse(latitude, CultureInfo.InvariantCulture), 10);
 
         // Parámetros.
         client.AddParameter("access_token", ApiKey);

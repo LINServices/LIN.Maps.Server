@@ -1,29 +1,20 @@
 ﻿namespace LIN.Maps.Server.Data;
 
-
-public class Context : DbContext
+/// <summary>
+/// Nuevo contexto a la base de datos
+/// </summary>
+public class Context(DbContextOptions<Context> options) : DbContext(options)
 {
-
 
     /// <summary>
     /// Tabla de cuentas
     /// </summary>
     public DbSet<LIN.Types.Maps.Models.ProfileModel> Profiles { get; set; }
 
-
     /// <summary>
     /// Puntos
     /// </summary>
     public DbSet<LIN.Types.Maps.Models.PlacePoint> Points { get; set; }
-
-
-
-    /// <summary>
-    /// Nuevo contexto a la base de datos
-    /// </summary>
-    public Context(DbContextOptions<Context> options) : base(options) { }
-
-
 
     /// <summary>
     /// Naming DB
@@ -45,6 +36,5 @@ public class Context : DbContext
         modelBuilder.Entity<LIN.Types.Maps.Models.PlacePoint>().ToTable("POINTS");
 
     }
-
 
 }

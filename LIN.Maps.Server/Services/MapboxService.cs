@@ -16,7 +16,7 @@ public class MapboxService
     /// <summary>
     /// Url del servicio.
     /// </summary>
-    public const string MapboxGeocodingUrl = "https://api.mapbox.com/geocoding/v5/mapbox.places/{0}.json";
+    public const string MapboxGeocodingUrl = "https://api.mapbox.com/search/geocode/v6/forward";
 
 
     /// <summary>
@@ -28,14 +28,15 @@ public class MapboxService
     {
 
         // Obtener cliente.
-        var client = new Global.Http.Services.Client(string.Format(MapboxGeocodingUrl, param));
+        var client = new Global.Http.Services.Client(MapboxGeocodingUrl);
 
         // Parámetros.
         client.AddParameter("access_token", ApiKey);
         client.AddParameter("limit", limit);
+        client.AddParameter("q", param);
 
         // Obtener respuesta.
-        var searchResult = await client.Get<MapboxGeocodingResponse>();
+        var searchResult = await client.Get<RootObject>();
 
         // Lista de lugares encontrados.
         var places = new List<PlaceDataModel>();
@@ -47,10 +48,10 @@ public class MapboxService
             {
                 var place = new PlaceDataModel()
                 {
-                    Text = feature.Text,
-                    Nombre = feature.PlaceName,
-                    Longitud = feature.Center[0].ToString().Replace(',', '.'),
-                    Latitud = feature.Center[1].ToString().Replace(',', '.')
+                    Text = feature.Properties.FullAddress,
+                    Nombre = feature.Properties.NamePreferred,
+                    Longitud = feature.Properties.Coordinates.Longitude.ToString().Replace(',', '.'),
+                    Latitud = feature.Properties.Coordinates.Latitude.ToString().Replace(',', '.')
                 };
                 places.Add(place);
             }
@@ -84,7 +85,7 @@ public class MapboxService
         client.AddParameter("bbox", $"{coordinates.MinX.ToString().Replace(',', '.')},{coordinates.MinY.ToString().Replace(',', '.')},{coordinates.MaxX.ToString().Replace(',', '.')},{coordinates.MaxY.ToString().Replace(',', '.')}");
 
         // Obtener respuesta.
-        var searchResult = await client.Get<MapboxGeocodingResponse>();
+        var searchResult = await client.Get<RootObject>();
 
         // Lista de lugares encontrados.
         var places = new List<PlaceDataModel>();
@@ -96,10 +97,10 @@ public class MapboxService
             {
                 var place = new PlaceDataModel()
                 {
-                    Text = feature.Text,
-                    Nombre = feature.PlaceName,
-                    Longitud = feature.Center[0].ToString().Replace(',', '.'),
-                    Latitud = feature.Center[1].ToString().Replace(',', '.')
+                    Text = feature.Properties.FullAddress,
+                    Nombre = feature.Properties.NamePreferred,
+                    Longitud = feature.Properties.Coordinates.Longitude.ToString().Replace(',', '.'),
+                    Latitud = feature.Properties.Coordinates.Latitude.ToString().Replace(',', '.')
                 };
                 places.Add(place);
             }

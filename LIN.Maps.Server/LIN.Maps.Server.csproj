@@ -7,10 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Global.Http" Version="3.2.0" />
-        <PackageReference Include="Http.Utils" Version="3.0.0" />
-        <PackageReference Include="LIN.Access.Auth" Version="1.7.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.1" />
+        <PackageReference Include="Http.Utils" Version="4.6.0" />
+        <PackageReference Include="LIN.Access.Auth" Version="4.1.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
     </ItemGroup>
 
     <ItemGroup>

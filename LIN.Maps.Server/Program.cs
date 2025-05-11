@@ -9,13 +9,8 @@ using LIN.Maps.Server.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
-
 builder.Services.AddAuthenticationService();
 builder.Services.AddLINHttp();
-
-// Mapbox.
 builder.Services.AddMapBox(builder.Configuration["mapbox:token"] ?? string.Empty);
 
 
